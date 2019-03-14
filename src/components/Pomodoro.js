@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import Clock from './Clock';
 // const CONSTANTS = require('../constants.js');
-import play_pause from '../img/play-pause.png';
-import reset from '../img/reset.png';
+import Emoji from './Emoji';
 import Break from './Break';
 import Session from './Session';
 
@@ -18,13 +17,16 @@ export default class Pomodoro extends Component {
         this.countdown = this.countdown.bind(this);
         this.start = this.start.bind(this);
         this.togglePlay = this.togglePlay.bind(this);
+        this.reset = this.reset.bind(this);
     }
 
     countdown() {
-        this.setState({
-            time: this.state.time - 1
-        });
-        this.start();  // what is this witchcraft??
+        if (this.state.time > 0) {
+            this.setState({
+                time: this.state.time - 1
+            });
+            this.start();  // what is this witchcraft??
+        }
     }
 
     togglePlay() {
@@ -46,15 +48,23 @@ export default class Pomodoro extends Component {
         })
     }
 
+    reset() {
+        clearTimeout(this.state.timeout);
+        this.setState({
+            time: 1500,
+            playing: false,
+            timeout: null
+        })
+    }
+
     render() {
         return(
             <div id="pomodoro">
                 <Break />
                 <Session />
                 <Clock time={this.state.time} />
-                <img id="start_stop" className="control" src={play_pause} alt="play/pause button"
-                    onClick={this.togglePlay}/>
-                <img id="reset" className="control" src={reset} alt="reset button" />
+                <Emoji id="start_stop" symbol="⏯" label="play/pause" eventHandler={this.togglePlay} />
+                <Emoji id="reset" symbol="🔄" label="reset" eventHandler={this.reset}/>
             </div>
         )
     }
