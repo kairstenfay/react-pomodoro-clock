@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 // const CONSTANTS = require('../constants.js');
+import Emoji from './Emoji';
+import actions from '../actions/pomodoroActions'
 
 export default class Break extends Component {
 
@@ -10,10 +12,10 @@ export default class Break extends Component {
                     Break length
                 </div>
                 <div id="break-length">
-                    5
+                    {actions.convertSecondsToTime(this.props.length, false)}
                 </div>
-                <div id="break-decrement">v</div>
-                <div id="break-increment">^</div>
+                <Emoji id="break-decrement" symbol="⬇️" label="down arrow" eventHandler={this.props.decrementor} />
+                <Emoji id="break-increment" symbol="⬆️" label="up arrow" eventHandler={this.props.incrementor} />
             </div>
         )
     }

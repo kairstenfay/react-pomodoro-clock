@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 // const CONSTANTS = require('../constants.js');
+import actions from '../actions/pomodoroActions'
 
 export default class Clock extends Component {
 
@@ -10,7 +11,7 @@ export default class Clock extends Component {
                     Session
                 </div>
                 <div id="time-left">
-                    <time>{this.props.time}</time>
+                    {actions.convertSecondsToTime(this.props.time)}
                 </div>
             </div>
         )
