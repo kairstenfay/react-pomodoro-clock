@@ -13,7 +13,7 @@ export default class Beep extends Component {
             element.play();
         }
     }
-    
+
     render() {
         return(
             <audio id="beep" src={beep} />

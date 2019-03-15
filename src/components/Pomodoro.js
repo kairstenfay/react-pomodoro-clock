@@ -11,7 +11,7 @@ export default class Pomodoro extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            time: 10, // 1500,
+            time: 1500,
             playing: false,
             timeout: null,
             break_length: 300,
@@ -76,7 +76,12 @@ export default class Pomodoro extends Component {
             session_length: 1500,
             playing: false,
             timeout: null
-        })
+        });
+
+        // Stop audio and rewind it to beginning
+        let element = document.getElementById("beep");
+        element.pause();
+        element.currentTime = 0;
     }
 
     incrementBreak() {
@@ -121,9 +126,12 @@ export default class Pomodoro extends Component {
                 decrementor={this.decrementBreak} />
                 <Session length={this.state.session_length} incrementor={this.incrementSession}
                 decrementor={this.decrementSession} />
+
                 <Clock time={this.state.time} onBreak={this.state.onBreak} />
+
                 <Emoji id="start_stop" symbol="⏯" label="play/pause" eventHandler={this.togglePlay} />
                 <Emoji id="reset" symbol="🔄" label="reset" eventHandler={this.reset}/>
+
                 <Beep time={this.state.time} />
             </div>
         )
