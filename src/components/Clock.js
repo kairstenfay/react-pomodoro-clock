@@ -5,10 +5,12 @@ import actions from '../actions/pomodoroActions'
 export default class Clock extends Component {
 
     render() {
+        let label = this.props.onBreak ? 'Break' : 'Session';
+
         return(
             <div id="clock">
                 <div id="timer-label">
-                    Session
+                    {label}
                 </div>
                 <div id="time-left">
                     {actions.convertSecondsToTime(this.props.time)}

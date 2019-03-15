@@ -10,11 +10,12 @@ export default class Pomodoro extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            time: 1500,
+            time: 10, // 1500,
             playing: false,
             timeout: null,
             break_length: 300,
-            session_length: 1500
+            session_length: 1500,
+            onBreak: false
         };
         this.countdown = this.countdown.bind(this);
         this.start = this.start.bind(this);
@@ -32,6 +33,18 @@ export default class Pomodoro extends Component {
                 time: this.state.time - 1
             });
             this.start();  // what is this witchcraft??
+        } else { // this.state.time === 0
+            let time;
+            if (!this.state.onBreak) {
+                time = this.state.break_length;
+            } else {
+                time = this.state.session_length;
+            }
+            this.setState({
+                time: time,
+                onBreak: !this.state.onBreak
+                });
+            this.start();
         }
     }
 
@@ -66,14 +79,16 @@ export default class Pomodoro extends Component {
     }
 
     incrementBreak() {
-        this.setState({
-            break_length: this.state.break_length + 60
-        })
+        if (this.state.break_length < 60) {
+            this.setState({
+                break_length: this.state.break_length + 60
+            })
+        }
     }
 
     decrementBreak() {
         console.log("register click");
-        if (this.state.break_length > 0) {
+        if (this.state.break_length > 60) {
             this.setState({
                 break_length: this.state.break_length - 60
             })
@@ -81,7 +96,7 @@ export default class Pomodoro extends Component {
     }
 
     incrementSession() {
-        if (this.state.session_length < 3540) { // 59 minutes todo
+        if (this.state.session_length < 3600) { // 60 minutes todo
             let updatedSessionLength = this.state.session_length + 60;
             this.setState({
                 session_length: updatedSessionLength,
@@ -91,7 +106,7 @@ export default class Pomodoro extends Component {
     }
 
     decrementSession() {
-        if (this.state.session_length > 0) {
+        if (this.state.session_length > 60) {
             let updatedSessionLength = this.state.session_length - 60;
             this.setState({
                 session_length: updatedSessionLength,
@@ -107,7 +122,7 @@ export default class Pomodoro extends Component {
                 decrementor={this.decrementBreak} />
                 <Session length={this.state.session_length} incrementor={this.incrementSession}
                 decrementor={this.decrementSession} />
-                <Clock time={this.state.time} />
+                <Clock time={this.state.time} onBreak={this.state.onBreak} />
                 <Emoji id="start_stop" symbol="⏯" label="play/pause" eventHandler={this.togglePlay} />
                 <Emoji id="reset" symbol="🔄" label="reset" eventHandler={this.reset}/>
             </div>
