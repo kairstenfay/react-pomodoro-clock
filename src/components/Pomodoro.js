@@ -4,6 +4,7 @@ import Clock from './Clock';
 import Emoji from './Emoji';
 import Break from './Break';
 import Session from './Session';
+import Beep from './Beep';
 
 export default class Pomodoro extends Component {
 
@@ -79,7 +80,8 @@ export default class Pomodoro extends Component {
     }
 
     incrementBreak() {
-        if (this.state.break_length < 60) {
+        console.log("register click");
+        if (this.state.break_length < 3600) {
             this.setState({
                 break_length: this.state.break_length + 60
             })
@@ -87,7 +89,6 @@ export default class Pomodoro extends Component {
     }
 
     decrementBreak() {
-        console.log("register click");
         if (this.state.break_length > 60) {
             this.setState({
                 break_length: this.state.break_length - 60
@@ -100,7 +101,6 @@ export default class Pomodoro extends Component {
             let updatedSessionLength = this.state.session_length + 60;
             this.setState({
                 session_length: updatedSessionLength,
-                time: updatedSessionLength
             })
         }
     }
@@ -110,7 +110,6 @@ export default class Pomodoro extends Component {
             let updatedSessionLength = this.state.session_length - 60;
             this.setState({
                 session_length: updatedSessionLength,
-                time: updatedSessionLength
             })
         }
     }
@@ -125,6 +124,7 @@ export default class Pomodoro extends Component {
                 <Clock time={this.state.time} onBreak={this.state.onBreak} />
                 <Emoji id="start_stop" symbol="⏯" label="play/pause" eventHandler={this.togglePlay} />
                 <Emoji id="reset" symbol="🔄" label="reset" eventHandler={this.reset}/>
+                <Beep time={this.state.time} />
             </div>
         )
     }
