@@ -1,22 +1,30 @@
+@import url("https://fonts.googleapis.com/css?family=Prompt");
+
+body {
+  background-color: whitesmoke;
+}
+
 .App {
   text-align: center;
   align-items: center;
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: whitesmoke;
+  font-family: 'Prompt', sans-serif;
 }
 
 #clock {
-  background-color: palevioletred;
-  border: 1px solid yellow;
-  border-radius: 50%;
-  width: 170px;
-  height: 170px;
+  width: 230px;
+  height: 230px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   color: whitesmoke;
+  font-size: 1em;
+  background: url('./img/tomato.png');
+  background-repeat: no-repeat;
+  background-position: center -20px;
+  background-size: 220px 220px;
 }
 
 #time-left {
@@ -28,7 +36,7 @@ header {
   width: 100vw;
   color: white;
   font-size: 1.8em;
-  padding: 2px;
+  padding: 10px;
 }
 
 .control {
@@ -45,6 +53,7 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 30px;
 }
 
 .button {
@@ -52,6 +61,7 @@ header {
   width: auto;
   padding: 10px;
 }
+
 
 [id$="crement"] {
   height: 10px;
