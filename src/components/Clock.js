@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-// const CONSTANTS = require('../constants.js');
+import React from 'react';
 import actions from '../actions/pomodoroActions'
 
 const Clock = function(props) {

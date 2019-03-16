@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-// const CONSTANTS = require('../constants.js');
+import React from 'react';
 import Button from './Button';
 import actions from '../actions/pomodoroActions';
 import up_arrow from '../img/up.png';
