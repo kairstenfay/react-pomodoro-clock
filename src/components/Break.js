@@ -1,22 +1,28 @@
 import React, { Component } from 'react';
 // const CONSTANTS = require('../constants.js');
-import Emoji from './Emoji';
-import actions from '../actions/pomodoroActions'
+import Button from './Button';
+import actions from '../actions/pomodoroActions';
+import up_arrow from '../img/up.png';
+import down_arrow from '../img/down.png';
 
 export default class Break extends Component {
 
     render() {
         return(
-            <div id="break">
-                <div id="break-label">
+            <fieldset id="break">
+                <legend id="break-label">
                     Break length
-                </div>
+                </legend>
                 <div id="break-length">
+                    <Button id="break-decrement" alt="down arrow" src={down_arrow}
+                            eventHandler={this.props.decrementor} />
+
                     {actions.convertSecondsToTime(this.props.length, false)}
+
+                    <Button id="break-increment" alt="up arrow" src={up_arrow}
+                            eventHandler={this.props.incrementor} />
                 </div>
-                <Emoji id="break-decrement" symbol="⬇️" label="down arrow" eventHandler={this.props.decrementor} />
-                <Emoji id="break-increment" symbol="⬆️" label="up arrow" eventHandler={this.props.incrementor} />
-            </div>
+            </fieldset>
         )
     }
 }

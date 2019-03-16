@@ -1,21 +1,24 @@
 import React, { Component } from 'react';
 import Clock from './Clock';
-// const CONSTANTS = require('../constants.js');
-import Emoji from './Emoji';
+import Button from './Button';
 import Break from './Break';
 import Session from './Session';
 import Beep from './Beep';
+import reset from '../img/reset.png';
+import start_stop from '../img/play-pause.png';
+
+const DEFAULT_SESSION_LENGTH = 1500;
 
 export default class Pomodoro extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            time: 1500,
+            time: DEFAULT_SESSION_LENGTH,
             playing: false,
             timeout: null,
             break_length: 300,
-            session_length: 1500,
+            session_length: DEFAULT_SESSION_LENGTH,
             onBreak: false
         };
         this.countdown = this.countdown.bind(this);
@@ -115,22 +118,31 @@ export default class Pomodoro extends Component {
             let updatedSessionLength = this.state.session_length - 60;
             this.setState({
                 session_length: updatedSessionLength,
-            })
+            });
+            if (!this.state.playing) {
+                this.setState({
+                    time: updatedSessionLength
+                });
+            }
         }
     }
 
     render() {
         return(
             <div id="pomodoro">
-                <Break length={this.state.break_length} incrementor={this.incrementBreak}
-                decrementor={this.decrementBreak} />
-                <Session length={this.state.session_length} incrementor={this.incrementSession}
-                decrementor={this.decrementSession} />
-
                 <Clock time={this.state.time} onBreak={this.state.onBreak} />
 
-                <Emoji id="start_stop" symbol="⏯" label="play/pause" eventHandler={this.togglePlay} />
-                <Emoji id="reset" symbol="🔄" label="reset" eventHandler={this.reset}/>
+                <div id="controls">
+                    <Button id="start_stop" alt="play/pause" src={start_stop} eventHandler={this.togglePlay} />
+                    <Button id="reset" alt="reset" src={reset} eventHandler={this.reset}/>
+                </div>
+                <div id="labels">
+                <Break length={this.state.break_length} incrementor={this.incrementBreak}
+                       decrementor={this.decrementBreak} />
+                <Session length={this.state.session_length} incrementor={this.incrementSession}
+                         decrementor={this.decrementSession} />
+                </div>
+
 
                 <Beep time={this.state.time} />
             </div>
