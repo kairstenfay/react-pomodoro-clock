@@ -2,20 +2,20 @@ import React, { Component } from 'react';
 // const CONSTANTS = require('../constants.js');
 import actions from '../actions/pomodoroActions'
 
-export default class Clock extends Component {
+const Clock = function(props) {
 
-    render() {
-        let label = this.props.onBreak ? 'Break' : 'Session';
+    let label = props.onBreak ? 'Break' : 'Session';
 
-        return(
-            <div id="clock">
-                <div id="timer-label">
-                    {label}
-                </div>
-                <div id="time-left">
-                    {actions.convertSecondsToTime(this.props.time)}
-                </div>
+    return(
+        <div id="clock">
+            <div id="timer-label">
+                {label}
             </div>
-        )
-    }
-}
+            <div id="time-left">
+                {actions.convertSecondsToTime(props.time)}
+            </div>
+        </div>
+    )
+};
+
+export default Clock;

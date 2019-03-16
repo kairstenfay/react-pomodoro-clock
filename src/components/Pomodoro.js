@@ -6,6 +6,7 @@ import Session from './Session';
 import Beep from './Beep';
 import reset from '../img/reset.png';
 import start_stop from '../img/play-pause.png';
+import Checkmarks from './Checkmarks';
 
 const DEFAULT_SESSION_LENGTH = 1500;
 
@@ -19,7 +20,8 @@ export default class Pomodoro extends Component {
             timeout: null,
             break_length: 300,
             session_length: DEFAULT_SESSION_LENGTH,
-            onBreak: false
+            onBreak: false,
+            cycles: 0
         };
         this.countdown = this.countdown.bind(this);
         this.start = this.start.bind(this);
@@ -39,21 +41,25 @@ export default class Pomodoro extends Component {
             this.start();  // what is this witchcraft??
         } else { // this.state.time === 0
             let time;
+            let cycles = this.state.cycles;
+
             if (!this.state.onBreak) {
                 time = this.state.break_length;
+                cycles++;
+
             } else {
                 time = this.state.session_length;
             }
             this.setState({
                 time: time,
-                onBreak: !this.state.onBreak
+                onBreak: !this.state.onBreak,
+                cycles: cycles
                 });
             this.start();
         }
     }
 
     togglePlay() {
-        console.log("register toggle");
         if (!this.state.playing) {
             this.start();
         } else {
@@ -78,7 +84,8 @@ export default class Pomodoro extends Component {
             break_length: 300,
             session_length: 1500,
             playing: false,
-            timeout: null
+            timeout: null,
+            cycles: 0
         });
 
         // Stop audio and rewind it to beginning
@@ -143,7 +150,7 @@ export default class Pomodoro extends Component {
                          decrementor={this.decrementSession} />
                 </div>
 
-
+                <Checkmarks cycles={this.state.cycles} />
                 <Beep time={this.state.time} />
             </div>
         )
